@@ -1,7 +1,8 @@
 /**
  * Created by Elmer on 27-1-2017.
  */
-import { Injectable } from '@angular/core';
+import {Injectable} from "@angular/core";
+import {Observable, BehaviorSubject} from "rxjs";
 
 @Injectable()
 export class UserService {
@@ -9,8 +10,13 @@ export class UserService {
   usersString: Array<any>;
   usersObj: Array<any>;
 
+  selectedUserSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  selectedUser$: Observable<any>;
+
 
   constructor() {
+
+    this.selectedUser$ = this.selectedUserSubject.asObservable();
 
 
     this.usersString = [
@@ -28,6 +34,10 @@ export class UserService {
     ];
 
 
+  }
+
+  setSelectedUser(user: any) {
+    this.selectedUserSubject.next(user);
   }
 
 }
