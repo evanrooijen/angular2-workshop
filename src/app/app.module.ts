@@ -7,6 +7,7 @@ import {RoutingModule} from "./app.routing";
 import {HomeComponent} from "./home/home.component";
 import {NotFoundComponent} from "./notfound/notfound.component";
 import {UserListComponent} from "./components/user-list/user-list.component";
+import {UserService} from "./services/user.service";
 
 
 const AWS_COMPONENTS = [
@@ -26,7 +27,7 @@ const AWS_COMPONENTS = [
     HttpModule,
     RoutingModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

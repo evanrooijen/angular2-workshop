@@ -2,6 +2,7 @@
  * Created by Elmer on 27-1-2017.
  */
 import {Component, OnInit} from "@angular/core";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'aws-home',
@@ -9,29 +10,15 @@ import {Component, OnInit} from "@angular/core";
 })
 export class HomeComponent implements OnInit {
 
-
   usersString: Array<any>;
   usersObj: Array<any>;
 
   homeUser: any;
 
 
-  constructor() {
-
-    this.usersString = [
-      'Elmer',
-      'Jeroen',
-      'Jelle',
-      'Martijn',
-      'Ariska',
-      'Sebastian'
-    ];
-
-    this.usersObj = [
-      {name: "Elmer", age: 25},
-      {name: "Jeroen", age: 24}
-    ];
-
+  constructor(private userService: UserService) {
+    this.usersString = this.userService.usersString;
+    this.usersObj = this.userService.usersObj;
   }
 
   ngOnInit() {
