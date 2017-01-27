@@ -3,41 +3,44 @@
  */
 import {Injectable} from "@angular/core";
 import {Observable, BehaviorSubject} from "rxjs";
+import {Http, Response} from "@angular/http";
 
 @Injectable()
 export class UserService {
 
-  usersString: Array<any>;
-  usersObj: Array<any>;
-
   selectedUserSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   selectedUser$: Observable<any>;
 
+  userlistSubject: BehaviorSubject<Array<any>> = new BehaviorSubject<Array<any>>([]);
+  userlist$: Observable<Array<any>>;
 
-  constructor() {
+
+  constructor(private http: Http) {
 
     this.selectedUser$ = this.selectedUserSubject.asObservable();
+    this.userlist$ = this.userlistSubject.asObservable();
 
-
-    this.usersString = [
-      'Elmer',
-      'Jeroen',
-      'Jelle',
-      'Martijn',
-      'Ariska',
-      'Sebastian'
-    ];
-
-    this.usersObj = [
-      {name: "Elmer", age: 25},
-      {name: "Jeroen", age: 24}
-    ];
+    this.getUsers();
 
 
   }
 
   setSelectedUser(user: any) {
     this.selectedUserSubject.next(user);
+  }
+
+  private getUsers() {
+
+    this.http.get('https://randomuser.me/api/?results=10&inc=name,email')
+      .map(this.extractData)
+      .subscribe((data) => {
+        this.userlistSubject.next(data);
+      });
+  }
+
+  private extractData(res: Response) {
+    let body = res.json();
+    return body.results || [];
   }
 
 }

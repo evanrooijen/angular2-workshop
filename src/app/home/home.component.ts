@@ -11,9 +11,7 @@ import {Subscription} from "rxjs";
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  usersString: Array<any>;
-  usersObj: Array<any>;
-
+  users: Array<any>;
 
   subscriptions: Subscription = new Subscription();
 
@@ -21,21 +19,23 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   constructor(private userService: UserService) {
-    this.usersString = this.userService.usersString;
-    this.usersObj = this.userService.usersObj;
   }
 
   ngOnInit() {
     this.subscriptions.add(this.userService.selectedUser$.subscribe((user: any) => {
       this.homeUser = user;
-    }))
+    }));
+
+    this.subscriptions.add(this.userService.userlist$.subscribe((users: Array<any>) => {
+      this.users = users;
+    }));
   }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
 
-  setUser(user: any){
+  setUser(user: any) {
     this.userService.setSelectedUser(user);
   }
 

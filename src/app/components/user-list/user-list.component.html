@@ -1,5 +1,5 @@
 <ul>
-  <li *ngFor="let user of userlist; let idx = index;" (click)="selectUser(idx)" >
-    {{ user | json }}
+  <li *ngFor="let user of userlist; let idx = index;" (click)="selectUser(idx)">
+    {{ user.name.title }} {{user.name.last }} - {{ user.email }}
   </li>
 </ul>
