@@ -1,1 +1,5 @@
 <h1>Home</h1>
+<aws-user-list (selectedUser)="setUser($event)" [userlist]="usersString"></aws-user-list>
+<aws-user-list (selectedUser)="setUser($event)" [userlist]="usersObj"></aws-user-list>
+
+<pre>{{homeUser}}</pre>

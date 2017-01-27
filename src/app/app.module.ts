@@ -6,11 +6,13 @@ import {AppComponent} from "./app.component";
 import {RoutingModule} from "./app.routing";
 import {HomeComponent} from "./home/home.component";
 import {NotFoundComponent} from "./notfound/notfound.component";
+import {UserListComponent} from "./components/user-list/user-list.component";
 
 
 const AWS_COMPONENTS = [
   HomeComponent,
-  NotFoundComponent
+  NotFoundComponent,
+  UserListComponent
 ];
 
 @NgModule({

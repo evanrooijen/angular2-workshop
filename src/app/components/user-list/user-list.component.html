@@ -1,0 +1,5 @@
+<ul>
+  <li *ngFor="let user of userlist; let idx = index;" (click)="selectUser(idx)" >
+    {{ user | json }}
+  </li>
+</ul>
