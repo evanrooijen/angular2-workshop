@@ -3,16 +3,20 @@
  */
 import {Injectable} from "@angular/core";
 import {Observable, BehaviorSubject} from "rxjs";
-import {Http, Response} from "@angular/http";
+import {Http, Response, URLSearchParams} from "@angular/http";
+import {AWSUser} from "../models/user.model";
 
 @Injectable()
 export class UserService {
 
-  selectedUserSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  selectedUser$: Observable<any>;
+  private API_FIELDS: Array<string> = ['name', 'email'];
 
-  userlistSubject: BehaviorSubject<Array<any>> = new BehaviorSubject<Array<any>>([]);
-  userlist$: Observable<Array<any>>;
+
+  selectedUserSubject: BehaviorSubject<AWSUser> = new BehaviorSubject<AWSUser>(null);
+  selectedUser$: Observable<AWSUser>;
+
+  userlistSubject: BehaviorSubject<Array<AWSUser>> = new BehaviorSubject<Array<AWSUser>>([]);
+  userlist$: Observable<Array<AWSUser>>;
 
 
   constructor(private http: Http) {
@@ -25,20 +29,25 @@ export class UserService {
 
   }
 
-  setSelectedUser(user: any) {
+  setSelectedUser(user: any): void {
     this.selectedUserSubject.next(user);
   }
 
-  private getUsers() {
+  private getUsers(): void {
 
-    this.http.get('https://randomuser.me/api/?results=10&inc=name,email')
+
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('results', '10');
+    params.set('inc', this.API_FIELDS.join(','));
+
+    this.http.get('https://randomuser.me/api/', {search: params})
       .map(this.extractData)
-      .subscribe((data) => {
+      .subscribe((data: Array<AWSUser>) => {
         this.userlistSubject.next(data);
       });
   }
 
-  private extractData(res: Response) {
+  private extractData(res: Response): Array<AWSUser> {
     let body = res.json();
     return body.results || [];
   }

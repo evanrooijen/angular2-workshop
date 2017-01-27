@@ -1,30 +1,32 @@
 /**
  * Created by Elmer on 27-1-2017.
  */
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from "@angular/core";
+import {AWSUser} from "../../models/user.model";
 
 @Component({
-    selector: 'aws-user-list',
-    templateUrl: './user-list.component.html'
+  selector: 'aws-user-list',
+  templateUrl: './user-list.component.html'
 })
 export class UserListComponent implements OnInit {
 
-    @Input()
-    userlist: Array<any>;
+  @Input()
+  userlist: Array<AWSUser>;
 
-    @Output()
-    selectedUser: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  selectedUser: EventEmitter<AWSUser> = new EventEmitter<AWSUser>();
 
-    constructor() { }
+  constructor() {
+  }
 
-    ngOnInit() { }
+  ngOnInit() {
+  }
 
 
-    selectUser(index: number){
+  selectUser(user: AWSUser): void {
 
-      const user = this.userlist[index];
-      this.selectedUser.emit(user);
+    this.selectedUser.emit(user);
 
-    }
+  }
 
 }
